@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>列表组件布局和测试页面</title>
+  <link rel="stylesheet" href="./com/normalize.css">
+  <link rel="stylesheet" href="./com/dlg-common.css">
+  <link rel="stylesheet" href="jsnotepad.css">
+  <link rel="icon" href="https://i.wangding.in/favicon.ico" sizes="48x48" type="image/png">
+  <style>
+  .list1,
+  .list2,
+  .list3 {
+    display: inline-block;
+    margin: 10px 5px;
+  }
+  </style>
+</head>
+<body>
+    <div class="notepad-container">
+        <!-- 菜单栏 -->
+        <div class="notepad-menubar">
+            <ul class="menu-title">
+                <li class="title">文件(F)</li>
+                <li class="title">编辑(E)</li>
+                <li class="title">格式(O)</li>
+                <li class="title">查看(V)</li>
+                <li class="title">帮助(H)</li>
+            </ul>
+        </div>
+        <div class="notepad-editor" contentEditable="true">
+            
+        </div>
+        <!-- 字体盒子 -->
+        <div class="font-box">
+            <!-- 字体盒子顶部 -->
+            <div class="font-top">
+                <p class="font-title">字体<span class="cancal-btn">✖</span></p>
+            </div>
+            <!-- 字体编辑 -->
+            <div class="notepad-list">
+                <div class="font-family"><p>字体(F):</p></div>
+                <div class="font-style"><p>字形(Y):</p></div>
+                <div class="font-size"><p>大小(S):</p></div>
+                <div class="list1"></div>
+                <div class="list2"></div>
+                <div class="list3"></div>
+                <fieldset class="sample">
+                  <legend>示例</legend>
+                  <p>AaBbYyZz</p>
+                </fieldset>
+                <div class="script">
+                  <label>
+                    脚本(R):<br>
+                    <select>
+                      <option value="西欧语言">西欧语言</option>
+                      <option value="中文 GB2312">中文 GB2312</option>
+                    </select>
+                  </label>
+                </div>
+                <input class="btn-ok btn" type="button" value="确定">
+                <input class="btn-cancel btn" type="button" value="取消">
+            </div>
+        </div>
+    </div>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="jsnotepad.js"></script>
+<script>
+$(function() {
+  var fonts = ['Agency FB', 'Algerian', 'Arial', 'Arial Rounded MT', 'Axure Handwriting', 'Bahnschrift', 'Baskerville Old Face', 'Bauhaus 93', 'Bell MT', 'Berlin Sans FB', 'Bernard MT', 'BlackAdder ITC'],
+      styles = ['常规', '斜体', '粗体', '粗偏斜体'],
+      sizes = ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '26', '28', '36', '48', '72'];
+  var font,style,size;
+  var l1 = new comList();
+  l1.show({
+    container: '.list1',
+    width: '176px',
+    list: fonts,
+    isFont: true,
+    selectHandler: function(e) {  font=fonts[e]; }
+  });
+
+  var l2 = new comList();
+  l2.show({
+    container: '.list2',
+    select: 3,
+    width: '132px',
+    list: styles,
+    isFontStyle: true,
+    selectHandler: function(e) { style=styles[e]; }
+  });
+
+  var l3 = new comList();
+  l3.show({
+    container: '.list3',
+    width: '64px',
+    list: sizes,
+    selectHandler: function(e) { size=sizes[e] }
+  });
+  $('.cancal-btn').click(function(){
+    $('.font-box').hide();
+  })
+  $('.btn').click(function(){
+    $('.font-box').hide();
+    
+    if(font==undefined){
+      font='Agency FB'
+    }
+    if(size==undefined){
+      size=8
+    }
+    if(style==undefined){
+      style='粗偏斜体'
+    }
+    $('.notepad-editor').css("font-size",size);
+    $('.notepad-editor').css("font-weight",style);
+    $('.notepad-editor').css("font-family",font);
+  })
+  $('.title').click(function(){
+      $('.font-box').show()
+  })
+  
+  
+});
+</script>
+</body>
+</html>
